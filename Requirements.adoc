@@ -1,0 +1,16 @@
+= Inventory Management System - Requirements
+:revnumber: 0.0.1-SNAPSHOT
+:description: Inventory management system example project for personal education.
+
+This project is an example inventory/stock management system.
+This initial version encompasses the basic functional requirements listed below.
+
+== Functional
+
+1. Lookup quantity and price of an inventory item.
+a. by inventory ID
+b. by inventory name (fuzzy-search)
+2. Update quantity and price
+3. Create new inventory items
+4. Delete inventory items
+
