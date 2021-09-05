@@ -1,16 +1,15 @@
 package com.example.inventory.controller;
 
 import com.example.inventory.model.InventoryDTO;
-import com.example.inventory.service.InventoryService;
+import com.example.inventory.service.InventorySearchService;
+import com.example.inventory.service.InventoryRepositoryService;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import reactor.core.publisher.Flux;
@@ -18,7 +17,6 @@ import reactor.core.publisher.Mono;
 
 import java.math.BigDecimal;
 import java.net.URLEncoder;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.List;
@@ -34,7 +32,9 @@ class InventoryControllerTest {
     private WebTestClient client;
 
     @MockBean
-    private InventoryService service;
+    private InventoryRepositoryService service;
+    @MockBean
+    private InventorySearchService searchService;
 
     private InventoryDTO inv;
 
@@ -93,7 +93,7 @@ class InventoryControllerTest {
 
     @Test
     void findByName() {
-        Mockito.when(service.findByNameFuzzy("name abc"))
+        Mockito.when(searchService.findByNameFuzzy("name abc"))
                 .thenReturn(Flux.just(inv));
 
         client.get().uri("/inventory?name=" + URLEncoder.encode("name abc", StandardCharsets.UTF_8))

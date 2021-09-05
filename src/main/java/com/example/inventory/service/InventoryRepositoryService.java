@@ -1,12 +1,16 @@
 package com.example.inventory.service;
 
 import com.example.inventory.model.InventoryDTO;
+import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.util.NoSuchElementException;
 
-public interface InventoryService {
+/**
+ * Basic inventory CRUD operations.
+ */
+public interface InventoryRepositoryService {
     /**
      * Returns a flux (paginated) of all inventory items
      *
@@ -23,18 +27,11 @@ public interface InventoryService {
     Mono<InventoryDTO> findById(String id);
 
     /**
-     * Find inventory items by name using fuzzy/approximate search.
-     *
-     * @param name inventory item name
-     * @return 0-1 inventory items
-     */
-    Flux<InventoryDTO> findByNameFuzzy(String name);
-
-    /**
      * Create inventory item.
      * @param request non-nullable
      * @return the created inventory item
      */
+    @Transactional
     Mono<InventoryDTO> createInventory(InventoryDTO request);
 
     /**
@@ -42,6 +39,7 @@ public interface InventoryService {
      * @param id non-nullable
      * @return the number of rows updated (0-many)
      */
+    @Transactional
     Mono<Integer> deleteInventory(String id);
 
     /**
@@ -50,5 +48,6 @@ public interface InventoryService {
      * @return the updated inventory item
      * @throws java.util.NoSuchElementException if inventory item is not found
      */
+    @Transactional
     Mono<InventoryDTO> updateInventory(InventoryDTO request) throws NoSuchElementException;
 }

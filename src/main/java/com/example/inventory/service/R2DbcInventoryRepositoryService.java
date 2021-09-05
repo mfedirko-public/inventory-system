@@ -1,6 +1,5 @@
 package com.example.inventory.service;
 
-import com.example.inventory.integration.ElasticSearchClient;
 import com.example.inventory.model.InventoryDTO;
 import com.example.inventory.repository.InventoryRepository;
 import lombok.RequiredArgsConstructor;
@@ -12,8 +11,7 @@ import java.util.NoSuchElementException;
 
 @Service
 @RequiredArgsConstructor
-public class InventoryServiceFacade implements InventoryService {
-    private final ElasticSearchClient esClient;
+public class R2DbcInventoryRepositoryService implements InventoryRepositoryService {
     private final InventoryRepository repository;
 
     @Override
@@ -26,10 +24,6 @@ public class InventoryServiceFacade implements InventoryService {
         throw new UnsupportedOperationException("not yet implemented");
     }
 
-    @Override
-    public Flux<InventoryDTO> findByNameFuzzy(String name) {
-        throw new UnsupportedOperationException("not yet implemented");
-    }
 
     @Override
     public Mono<InventoryDTO> createInventory(InventoryDTO request) {
