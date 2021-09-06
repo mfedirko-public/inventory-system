@@ -5,6 +5,7 @@ bases:
 resources:
   - pv.yml
   - pvc.yml
+  - ingress.yml
 images:
   - name: inventory-image
     newName: mifedirko/inventory-system
@@ -14,3 +15,6 @@ configMapGenerator:
   - name: app-configmap
     literals:
       - SPRING_PROFILES_ACTIVE=local
+  - name: env-configmap
+    files:
+      - application.properties

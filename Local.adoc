@@ -9,5 +9,8 @@ b. `docker login`
 c. `docker push mifedirko/inventory-system:latest`
 
 == Deploying to minikube
-1. `kubectl apply -k kube/kustomize/overlays/local`
-2. (Optional) watch pods startup `watch -n1 kubectl get pods`
+1. Ensure minikube allows ingress:
+a. `minikube addons enable ingress`
+b. Modify /etc/hosts to add
+2. `kubectl apply -k kube/kustomize/overlays/local`
+3. (Optional) watch pods startup `watch -n1 kubectl get pods`
