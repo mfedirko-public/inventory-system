@@ -17,7 +17,7 @@ spec:
       containers:
         - name: app
           image: inventory-image
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           ports:
             - containerPort: 8080
               name: application
@@ -29,6 +29,11 @@ spec:
                 configMapKeyRef:
                   name: pgprops-configmap
                   key: DB_USER
+            - name: DB_PWD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: password
             - name: DB_DATABASE
               valueFrom:
                 configMapKeyRef:
@@ -41,13 +46,16 @@ spec:
             - configMapRef:
                 name: app-configmap
                 optional: true
+            - configMapRef:
+                name: env-configmap
+                optional: true
           livenessProbe:
             httpGet:
-              path: /actuator/health
+              path: /actuator/health/liveness
               port: application
             initialDelaySeconds: 20
           readinessProbe:
             httpGet:
-              path: /actuator/health
+              path: /actuator/health/readiness
               port: application
             initialDelaySeconds: 15

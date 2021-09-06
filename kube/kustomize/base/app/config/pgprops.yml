@@ -3,5 +3,5 @@ kind: ConfigMap
 metadata:
   name: pgprops-configmap
 data:
-  DB_USER: kube
+  DB_USER: postgres
   DB_DATABASE: inventory

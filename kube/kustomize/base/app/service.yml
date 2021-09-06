@@ -9,7 +9,7 @@ spec:
   type: NodePort
   ports:
     - name: app-port
-      port: 80
+      port: 8080
       targetPort: application
       protocol: TCP
   selector:

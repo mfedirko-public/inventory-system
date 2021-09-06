@@ -7,3 +7,4 @@ data:
     CREATE USER kube;
     CREATE DATABASE inventory;
     GRANT ALL PRIVILEGES ON DATABASE inventory TO kube;
+    GRANT ALL PRIVILEGES ON DATABASE inventory TO postgres;

@@ -17,13 +17,16 @@ public class DatabaseConfiguration extends AbstractR2dbcConfiguration {
     private final int port;
     private final String database;
     private final String username;
+    private final String password;
 
     public DatabaseConfiguration(@Value("${db.inventory.host}") String host, @Value("${db.inventory.port}") int port,
+                                 @Value("${db.inventory.password}") String password,
                                  @Value("${db.inventory.database}") String database, @Value("${db.inventory.username}") String username) {
         this.host = host;
         this.port = port;
         this.database = database;
         this.username = username;
+        this.password = password;
     }
 
 
@@ -36,6 +39,7 @@ public class DatabaseConfiguration extends AbstractR2dbcConfiguration {
                 .host(host)
                 .database(database)
                 .port(port)
+                .password(password)
                 .username(username).build());
     }
 }
