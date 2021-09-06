@@ -1,0 +1,13 @@
+= Running and Building the project locally
+
+== Building
+1. `cd <project root dir>`
+2. `docker build -t mifedirko/inventory-system .`
+3. Deploy to docker hub
+a. (Optional) new version tag: `docker tag inventory:latest mifedirko/inventory-system:0.0.1`
+b. `docker login`
+c. `docker push mifedirko/inventory-system:latest`
+
+== Deploying to minikube
+1. `kubectl apply -k kube/kustomize/overlays/local`
+2. (Optional) watch pods startup `watch -n1 kubectl get pods`

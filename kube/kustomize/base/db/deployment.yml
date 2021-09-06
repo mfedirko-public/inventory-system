@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgresql
+spec:
+  replicas: 1
+  revisionHistoryLimit: 1
+  progressDeadlineSeconds: 60
+  selector:
+    matchLabels:
+      tier: db
+  template:
+    metadata:
+      labels:
+        app: inventory
+    spec:
+      volumes:
+        - name: pgdata
+          persistentVolumeClaim:
+            claimName: postgres
+        - name: pginit
+          configMap:
+            name: pginit-configmap
+
+      containers:
+        - name: db
+          image: postgres:13.4-alpine
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 5432
+              name: postgres
+          env:
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: password
+            - name: PGDATA
+              value: /var/lib/postgresql/data/pgdata
+          livenessProbe:
+            tcpSocket:
+              port: 5432
+              initialDelaySeconds: 5
+              periodSeconds: 3
+          readinessProbe:
+            tcpSocket:
+              port: 5432
+              initialDelaySeconds: 5
+              periodSeconds: 3
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data/pgdata
+              name: pgdata
+            - mountPath: /docker-entrypoint-initdb.d
+              name: pginit-configmap

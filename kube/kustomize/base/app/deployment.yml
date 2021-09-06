@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: inventory-backend
+spec:
+  replicas: 2
+  revisionHistoryLimit: 1
+  progressDeadlineSeconds: 60
+  selector:
+    matchLabels:
+      tier: app
+  template:
+    metadata:
+      labels:
+        app: inventory
+    spec:
+      containers:
+        - name: app
+          image: inventory-image
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+              name: application
+          env:
+            - name: DB_HOST
+              value: ${DB_SERVICE_SERVICE_HOST}
+            - name: DB_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: pgprops-configmap
+                  key: DB_USER
+            - name: DB_DATABASE
+              valueFrom:
+                configMapKeyRef:
+                  name: pgprops-configmap
+                  key: DB_DATABASE
+            - name: DB_PORT
+              value: ${DB_SERVICE_SERVICE_PORT_POSTGRES}
+
+          envFrom:
+            configMapRef:
+              name: app-configmap
+              optional: true
+          livenessProbe:
+            httpGet:
+              path: /actuator/keepalive
+              port: application
+              initialDelaySeconds: 20
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: application
+              initialDelaySeconds: 15

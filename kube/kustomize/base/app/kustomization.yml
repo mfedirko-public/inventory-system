@@ -1,0 +1,8 @@
+resources:
+  - deployment.yml
+  - service.yml
+  - ../../config/pgprops.yml
+
+commonLabels:
+  app: inventory
+  tier: app

@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: pginit-configmap
+data:
+  init.sql: |
+    CREATE USER kube;
+    CREATE DATABASE inventory;
+    GRANT ALL PRIVILEGES ON DATABASE inventory TO kube;

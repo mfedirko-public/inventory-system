@@ -1,0 +1,16 @@
+bases:
+  - ../../base/app
+  - ../../base/db
+
+resources:
+  - pv.yml
+  - pvc.yml
+images:
+  - name: inventory-image
+    newName: mifedirko/inventory-system
+    newTag: latest
+
+configMapGenerator:
+  - name: app-configmap
+    files:
+      - application.properties

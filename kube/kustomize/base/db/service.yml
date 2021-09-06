@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: db-service
+  labels:
+    app: inventory
+spec:
+  # cluster-internal, not reachable from outside
+  type: ClusterIP
+  ports:
+    - name: postgres
+      port: 5432
+      protocol: TCP
+  selector:
+    tier: db

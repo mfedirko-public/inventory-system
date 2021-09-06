@@ -2,3 +2,9 @@ spring:
   application:
     name: Inventory management system
 
+db:
+  inventory:
+    host: ${DB_HOST}
+    username: ${DB_USER}
+    database: ${DB_DATABASE}
+    port: ${DB_PORT}
