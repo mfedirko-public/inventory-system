@@ -43,7 +43,7 @@ spec:
                 optional: true
           livenessProbe:
             httpGet:
-              path: /actuator/keepalive
+              path: /actuator/health
               port: application
             initialDelaySeconds: 20
           readinessProbe:
