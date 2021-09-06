@@ -17,6 +17,7 @@ public class LocalDisabledSecurityConfiguration {
                 .authorizeExchange()
                 .anyExchange()
                 .permitAll().and()
+                .csrf().disable()
                 .build();
     }
 }

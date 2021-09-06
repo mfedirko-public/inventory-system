@@ -19,12 +19,12 @@ public interface InventoryRepositoryService {
     Flux<InventoryDTO> findAll();
 
     /**
-     * Find inventory item by ID
+     * Find inventory item by UUID
      *
-     * @param id non-nullable
+     * @param uuid non-nullable
      * @return 0-1 inventory items
      */
-    Mono<InventoryDTO> findById(String id);
+    Mono<InventoryDTO> findByUuid(String uuid);
 
     /**
      * Create inventory item.

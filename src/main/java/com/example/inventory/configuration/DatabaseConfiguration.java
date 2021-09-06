@@ -3,13 +3,21 @@ package com.example.inventory.configuration;
 import io.r2dbc.postgresql.PostgresqlConnectionConfiguration;
 import io.r2dbc.postgresql.PostgresqlConnectionFactory;
 import io.r2dbc.spi.ConnectionFactory;
+import io.r2dbc.spi.ConnectionFactoryOptions;
+import io.r2dbc.spi.Option;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.r2dbc.ConnectionFactoryBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.r2dbc.config.AbstractR2dbcConfiguration;
+import org.springframework.data.r2dbc.repository.config.EnableR2dbcRepositories;
+import org.springframework.r2dbc.connection.init.ConnectionFactoryInitializer;
+import org.springframework.r2dbc.connection.init.ResourceDatabasePopulator;
 
 @Configuration
+@EnableR2dbcRepositories(basePackages = "com.example.inventory.repository")
 @Slf4j
 public class DatabaseConfiguration extends AbstractR2dbcConfiguration {
 
@@ -35,11 +43,19 @@ public class DatabaseConfiguration extends AbstractR2dbcConfiguration {
     public ConnectionFactory connectionFactory() {
         log.debug("Connecting to database with host {} database {} port {} user {}",
                 host, database, port, username);
-        return new PostgresqlConnectionFactory(PostgresqlConnectionConfiguration.builder()
-                .host(host)
-                .database(database)
-                .port(port)
+        String url = String.format("r2dbc:postgresql://%s:%d/%s", host, port, database);
+        return ConnectionFactoryBuilder.withUrl(url)
+                .username(username)
                 .password(password)
-                .username(username).build());
+                .configure(opts -> opts.option(ConnectionFactoryOptions.DRIVER, "postgresql"))
+                .build();
+    }
+
+    @Bean
+    public ConnectionFactoryInitializer initializer() {
+        ConnectionFactoryInitializer initializer = new ConnectionFactoryInitializer();
+        initializer.setConnectionFactory(connectionFactory());
+        initializer.setDatabasePopulator(new ResourceDatabasePopulator(new ClassPathResource("schema.sql")));
+        return initializer;
     }
 }

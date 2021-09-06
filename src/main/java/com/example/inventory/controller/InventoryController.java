@@ -23,11 +23,11 @@ public class InventoryController {
 
     @GetMapping("/{id}")
     public Mono<InventoryDTO> findById(@PathVariable("id") String id) {
-        return repoService.findById(id);
+        return repoService.findByUuid(id);
     }
 
     @GetMapping(params = {"name"})
-    public Flux<InventoryDTO> findByName(@RequestParam("name") String name) {
+    public Flux<InventoryDTO> findByName(@RequestParam(value = "name", required = false) String name) {
         return searchService.findByNameFuzzy(name);
     }
 

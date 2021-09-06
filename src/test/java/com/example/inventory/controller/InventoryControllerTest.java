@@ -65,7 +65,7 @@ class InventoryControllerTest {
 
     @Test
     void findById() {
-        Mockito.when(service.findById("abc-123"))
+        Mockito.when(service.findByUuid("abc-123"))
                 .thenReturn(Mono.just(inv));
 
         client.get().uri("/inventory/abc-123")
@@ -81,7 +81,7 @@ class InventoryControllerTest {
 
     @Test
     void findById_noData() {
-        Mockito.when(service.findById("abc-123"))
+        Mockito.when(service.findByUuid("abc-123"))
                 .thenReturn(Mono.empty());
 
         client.get().uri("/inventory/abc-123")

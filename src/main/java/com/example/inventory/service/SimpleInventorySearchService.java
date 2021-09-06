@@ -13,6 +13,6 @@ public class SimpleInventorySearchService implements InventorySearchService {
 
     @Override
     public Flux<InventoryDTO> findByNameFuzzy(String name) {
-        throw new UnsupportedOperationException("not yet implemented");
+        return repository.findByNameLike(name);
     }
 }
