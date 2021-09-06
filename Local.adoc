@@ -1,6 +1,11 @@
 = Running and Building the project locally
 
-== Building
+== Option 1: shell script
+1. `chmod +x bd.sh && ./bd.sh`
+
+== Option 2: manual commands
+
+=== Building
 1. `cd <project root dir>`
 2. `docker build -t mifedirko/inventory-system .`
 3. Deploy to docker hub
@@ -8,7 +13,7 @@ a. (Optional) new version tag: `docker tag inventory:latest mifedirko/inventory-
 b. `docker login`
 c. `docker push mifedirko/inventory-system:latest`
 
-== Deploying to minikube
+=== Deploying to minikube
 1. Ensure minikube allows ingress:
 a. `minikube addons enable ingress`
 b. Modify /etc/hosts to add
