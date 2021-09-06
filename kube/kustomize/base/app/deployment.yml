@@ -38,16 +38,16 @@ spec:
               value: ${DB_SERVICE_SERVICE_PORT_POSTGRES}
 
           envFrom:
-            configMapRef:
-              name: app-configmap
-              optional: true
+            - configMapRef:
+                name: app-configmap
+                optional: true
           livenessProbe:
             httpGet:
               path: /actuator/keepalive
               port: application
-              initialDelaySeconds: 20
+            initialDelaySeconds: 20
           readinessProbe:
             httpGet:
               path: /actuator/health
               port: application
-              initialDelaySeconds: 15
+            initialDelaySeconds: 15

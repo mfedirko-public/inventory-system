@@ -40,15 +40,15 @@ spec:
           livenessProbe:
             tcpSocket:
               port: 5432
-              initialDelaySeconds: 5
-              periodSeconds: 3
+            initialDelaySeconds: 5
+            periodSeconds: 3
           readinessProbe:
             tcpSocket:
               port: 5432
-              initialDelaySeconds: 5
-              periodSeconds: 3
+            initialDelaySeconds: 5
+            periodSeconds: 3
           volumeMounts:
             - mountPath: /var/lib/postgresql/data/pgdata
               name: pgdata
             - mountPath: /docker-entrypoint-initdb.d
-              name: pginit-configmap
+              name: pginit

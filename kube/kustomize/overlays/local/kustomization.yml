@@ -1,6 +1,6 @@
 bases:
-  - ../../base/app
   - ../../base/db
+  - ../../base/app
 
 resources:
   - pv.yml
@@ -8,9 +8,9 @@ resources:
 images:
   - name: inventory-image
     newName: mifedirko/inventory-system
-    newTag: latest
+    newTag: 0.0.1
 
 configMapGenerator:
   - name: app-configmap
-    files:
-      - application.properties
+    literals:
+      - SPRING_PROFILES_ACTIVE=local
